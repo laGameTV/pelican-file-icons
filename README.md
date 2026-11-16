@@ -34,6 +34,11 @@ Pelican Panel 1.0 (tested with `v1.0.0-rc.3`). Nothing else: no Node.js and no b
 
 ## Installation
 
+**From the Plugin Hub:** in the admin area, open **Plugins → Browse Plugin Hub**, search for *File Icons* and
+install it. You can also find it on [hub.pelican.dev](https://hub.pelican.dev/plugins/file-icons).
+
+**From a URL:**
+
 1. In the admin area, open **Plugins** and click **Import from URL**.
 2. Paste this link and confirm:
 
@@ -66,7 +71,8 @@ shows that file as changed. Don't commit that change, and keep it when you pull 
 
 ## Updating
 
-When a new version is released, the plugin list shows an **Update** button. Your settings are kept.
+Updates come through the Pelican Plugin Hub: when a new version is out, the plugin list shows an **Update**
+button. Your settings are kept.
 
 ## Choosing your icon theme
 

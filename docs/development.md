@@ -51,20 +51,24 @@ bun run fetch:vscode                   # refresh scripts/data/vscode-languages.j
    git push origin main v1.2.3
    ```
 
+3. Once the GitHub release is published, sync it on the [Pelican Plugin Hub](https://hub.pelican.dev/plugins/file-icons).
+
 The [release workflow](../.github/workflows/release.yml) checks that the tag matches `plugin.json`, runs the
-tests, builds the zip and publishes a GitHub release with three files:
+tests, builds the zip and publishes a GitHub release with two files:
 
 | File | Purpose |
 |---|---|
-| `file-icons-<version>.zip` | The plugin. `update.json` points to this file. |
+| `file-icons-<version>.zip` | The plugin. |
 | `file-icons.zip` | The same zip under a fixed name, for `.../releases/latest/download/file-icons.zip`. |
-| `update.json` | The update feed. `update_url` in `plugin.json` points to `.../releases/latest/download/update.json`. |
 
-Installed copies of the plugin check `update.json` and show an **Update** button in the panel's plugin list. The
-release notes are taken from the version's section in `CHANGELOG.md`.
+The release notes are taken from the version's section in `CHANGELOG.md`.
 
-`bun run release` builds the same zip locally. With `--download-url <url>` it also writes `dist/update.json`
-(`{version}` in the URL is replaced with the version).
+Updates are delivered through the Plugin Hub: `update_url` in `plugin.json` has to stay
+`https://hub.pelican.dev/plugins/file-icons/update.json`, otherwise the Hub rejects the release. After a sync,
+installed copies show an **Update** button in the panel's plugin list.
+
+`bun run release` builds the same zip locally. With `--download-url <url>` it also writes a `dist/update.json`
+for a self-hosted update feed (`{version}` in the URL is replaced with the version).
 
 ## Updating the icon themes
 
