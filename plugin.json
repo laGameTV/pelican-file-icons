@@ -6,7 +6,7 @@
     "description": "VS Code file icons for the file manager: Material Icon Theme or Datapack Icons.",
     "category": "plugin",
     "url": "https://github.com/laGameTV/pelican-file-icons",
-    "update_url": null,
+    "update_url": "https://github.com/laGameTV/pelican-file-icons/releases/latest/download/update.json",
     "namespace": "LaGameTV\\FileIcons",
     "class": "FileIconsPlugin",
     "panels": [
