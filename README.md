@@ -1,4 +1,4 @@
-# File Icons (by Lennox)
+# File Icons
 
 Replaces the file and folder icons in the Pelican Panel file manager with the icons of a VS Code icon theme.
 Two complete themes are included: the [Material Icon Theme](https://github.com/material-extensions/vscode-material-icon-theme)
