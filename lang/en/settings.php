@@ -51,8 +51,11 @@ return [
 
     'folder_themes' => [
         'specific' => 'Specific folder icons',
+        'specific_description' => 'Known folders get their own icon, e.g. plugins, config or logs. Other folders get the theme\'s plain folder icon.',
         'classic' => 'Generic folder icon',
+        'classic_description' => 'All folders get the theme\'s plain folder icon, except your custom folder icons and the game-server extras.',
         'none' => 'Keep the panel\'s folder icons',
+        'none_description' => 'Folders keep the panel\'s original icon. Only files get new icons.',
     ],
 
     'icon_packs' => [

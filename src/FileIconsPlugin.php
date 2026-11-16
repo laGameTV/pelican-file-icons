@@ -12,7 +12,6 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\ToggleButtons;
 use Filament\Notifications\Notification;
 use Filament\Panel;
 use Filament\Schemas\Components\Callout;
@@ -87,14 +86,17 @@ class FileIconsPlugin implements HasPluginSettings, Plugin
                     Toggle::make('allow_user_choice')
                         ->label(self::trans('fields.allow_user_choice'))
                         ->helperText(self::trans('fields.allow_user_choice_help')),
-                    ToggleButtons::make('folder_theme')
+                    Radio::make('folder_theme')
                         ->label(self::trans('fields.folder_theme'))
                         ->helperText(self::trans('fields.folder_theme_help'))
                         ->options(array_combine(
                             SettingsData::FOLDER_THEMES,
                             array_map(static fn (string $theme): string => self::trans('folder_themes.' . $theme), SettingsData::FOLDER_THEMES),
                         ))
-                        ->inline()
+                        ->descriptions(array_combine(
+                            SettingsData::FOLDER_THEMES,
+                            array_map(static fn (string $theme): string => self::trans('folder_themes.' . $theme . '_description'), SettingsData::FOLDER_THEMES),
+                        ))
                         ->required()
                         ->live(),
                 ]),

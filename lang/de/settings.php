@@ -51,8 +51,11 @@ return [
 
     'folder_themes' => [
         'specific' => 'Passende Ordnersymbole',
+        'specific_description' => 'Bekannte Ordner bekommen ein eigenes Symbol, z. B. plugins, config oder logs. Andere Ordner bekommen das normale Ordnersymbol des Designs.',
         'classic' => 'Einheitliches Ordnersymbol',
+        'classic_description' => 'Alle Ordner bekommen das normale Ordnersymbol des Designs, außer Ihren eigenen Ordnersymbolen und den Gameserver-Extras.',
         'none' => 'Ordnersymbole des Panels behalten',
+        'none_description' => 'Ordner behalten das ursprüngliche Symbol des Panels. Nur Dateien bekommen neue Symbole.',
     ],
 
     'icon_packs' => [
