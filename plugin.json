@@ -2,7 +2,7 @@
     "id": "file-icons",
     "name": "File Icons",
     "author": "Lennox",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "VS Code file icons for the file manager: Material Icon Theme or Datapack Icons.",
     "category": "plugin",
     "url": "https://github.com/laGameTV/pelican-file-icons",
