@@ -1,10 +1,11 @@
 name: Release
 
 # Push a tag like v1.2.3 (matching "version" in plugin.json) to publish a release.
-# The release gets three files:
-#   file-icons-<version>.zip  the plugin, referenced by update.json
+# The release gets two files:
+#   file-icons-<version>.zip  the plugin
 #   file-icons.zip            the same zip under a fixed name, for .../releases/latest/download/file-icons.zip
-#   update.json               the feed that plugin.json's update_url points to (via releases/latest)
+# Updates are delivered through the Pelican Plugin Hub (update_url in plugin.json): sync the release on the
+# Hub after it has been published.
 
 on:
   push:
@@ -78,9 +79,9 @@ jobs:
           PHP_BINARY: php
         run: bun run test
 
-      - name: Build the release zip and update.json
+      - name: Build the release zip
         run: |
-          bun scripts/release.ts --download-url "https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/file-icons-{version}.zip"
+          bun scripts/release.ts
           cp "dist/file-icons-${VERSION}.zip" dist/file-icons.zip
 
       - name: Write the release notes
@@ -97,8 +98,10 @@ jobs:
 
           ### Install or update
 
-          - **Update:** the panel shows an *Update* button in **Admin → Plugins** within a few minutes.
-          - **New install:** in **Admin → Plugins**, choose **Import from URL** and paste
+          - **Update:** once the release is on the Pelican Plugin Hub, the panel shows an *Update* button in
+            **Admin → Plugins**.
+          - **New install:** install it from the [Plugin Hub](https://hub.pelican.dev/plugins/file-icons), or in
+            **Admin → Plugins** choose **Import from URL** and paste
             \`https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/file-icons.zip\`,
             then choose **Install** in the plugin's actions menu.
 
@@ -112,7 +115,6 @@ jobs:
           gh release create "${GITHUB_REF_NAME}" \
             "dist/file-icons-${VERSION}.zip" \
             dist/file-icons.zip \
-            dist/update.json \
             --title "File Icons ${VERSION}" \
             --notes-file dist/notes.md \
             --verify-tag
