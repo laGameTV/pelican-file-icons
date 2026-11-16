@@ -2,7 +2,7 @@
 /**
  * Builds the installable release archive (dev tooling only):
  *
- *   bun scripts/release.ts [--out <dir>] [--skip-data-check]
+ *   bun scripts/release.ts [--out <dir>] [--skip-data-check] [--download-url <url>]
  *
  * => dist/file-icons-<version>.zip with a single top-level `file-icons/` folder containing
  *    plugin.json (without `meta`), README.md, LICENSE, THIRD_PARTY_NOTICES.md, CHANGELOG.md,
@@ -13,6 +13,9 @@
  * The archive is reproducible: entries are sorted, timestamps are fixed (SOURCE_DATE_EPOCH if
  * set, else 1980-02-01 00:00), permissions are normalised (0644 files / 0755 directories).
  * Before writing it, the generated data is checked with `scripts/build-data.ts --check`.
+ *
+ * With --download-url, it also writes <out>/update.json for Pelican's plugin updater
+ * ({"*": {version, download_url, sha256}}). `{version}` in the URL is replaced with the version.
  */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -33,12 +36,13 @@ const { values: args } = parseArgs({
     options: {
         out: { type: 'string', default: join(ROOT, 'dist') },
         'skip-data-check': { type: 'boolean', default: false },
+        'download-url': { type: 'string' },
         help: { type: 'boolean', short: 'h', default: false },
     },
     strict: true,
 });
 if (args.help) {
-    console.log('usage: bun scripts/release.ts [--out <dir>] [--skip-data-check]');
+    console.log('usage: bun scripts/release.ts [--out <dir>] [--skip-data-check] [--download-url <url>]');
     process.exit(0);
 }
 
@@ -292,8 +296,19 @@ if (skipped.length) {
     console.log(`[release] skipped dotfiles: ${skipped.join(', ')}`);
 }
 console.log(`[release] sha256 ${sha256}`);
-console.log('[release] update.json:');
-console.log(JSON.stringify({ '*': { version, download_url: '<fill in>', sha256 } }, null, 4));
+const downloadUrl = args['download-url']?.split('{version}').join(version);
+if (downloadUrl !== undefined && !/^https:\/\/\S+\.zip$/.test(downloadUrl)) {
+    fail(`--download-url must be an https URL ending in .zip, got ${downloadUrl}`);
+}
+const updateJson = `${JSON.stringify({ '*': { version, download_url: downloadUrl ?? '<fill in>', sha256 } }, null, 4)}\n`;
+if (downloadUrl !== undefined) {
+    const updateTarget = join(resolve(args.out!), 'update.json');
+    writeFileSync(updateTarget, updateJson);
+    console.log(`[release] ${relative(ROOT, updateTarget).split('\\').join('/') || updateTarget}:`);
+} else {
+    console.log('[release] update.json (pass --download-url to write it):');
+}
+process.stdout.write(updateJson);
 if (warnings.length) {
     console.log(`[release] ${warnings.length} warning(s), see above`);
 }
