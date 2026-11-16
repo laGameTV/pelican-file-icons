@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build output (release zips)
+dist/
+
+# Downloaded theme sources (the Datapack Icons VSIX). `bun run build` downloads them again if missing.
+scripts/.cache/
+
+# PHPUnit
+.phpunit*
+
+# Local panel checkout used to reproduce the CI lint job
+/pelican/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+/.fleet
+/.idea
+/.nova
+/.vscode

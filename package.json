@@ -1,0 +1,19 @@
+{
+  "name": "pelican-file-icons",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dev tooling for the Pelican Panel \"File Icons\" plugin (not needed at runtime).",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "fetch:vscode": "bun scripts/fetch-vscode-languages.ts",
+    "build": "bun scripts/build-data.ts",
+    "test": "bun scripts/test.ts",
+    "release": "bun scripts/release.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.3",
+    "fflate": "0.8.2",
+    "material-icon-theme": "5.40.0"
+  }
+}

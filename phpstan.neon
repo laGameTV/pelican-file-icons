@@ -1,0 +1,40 @@
+# PHPStan runs from the root of a Pelican Panel checkout, with this repository
+# at plugins/file-icons. The paths below are relative to this file.
+#
+#   cd /path/to/pelican
+#   vendor/bin/phpstan analyse -c plugins/file-icons/phpstan.neon
+#
+# Larastan boots the panel from the current working directory, so always run it
+# from the panel root.
+
+includes:
+    - ../../vendor/larastan/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - src
+        - config
+        - database
+        - lang
+
+    level: 6
+
+    # Same ignores as the official pelican-dev/plugins repository. They may not
+    # match anything in this plugin, so don't report them as unmatched.
+    ignoreErrors:
+        -
+            identifier: missingType.generics
+            reportUnmatched: false
+        -
+            identifier: larastan.noEnvCallsOutsideOfConfig
+            reportUnmatched: false
+
+        # The panel only registers the `file-icons::` view namespace while the plugin
+        # is enabled, so whether view('file-icons::…') passes Larastan's view-string
+        # check depends on the checkout. Ignore it either way (CI uses a fresh,
+        # not-installed copy).
+        -
+            message: '#^Parameter \#1 \$view of function view expects view-string\|null, string given\.$#'
+            identifier: argument.type
+            reportUnmatched: false
